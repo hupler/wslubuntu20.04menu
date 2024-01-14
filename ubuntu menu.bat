@@ -1,7 +1,11 @@
+
 @echo off
+echo off
 set /p UNAME=< uname.txt
+cls
 :menu
 color a
+echo.
 cls
 cls
 cls
@@ -41,14 +45,26 @@ GOTO menu
 
 :stup
 cls
-SET /P UNAME=Enter your username: 
+SET /P UNAME=Enter your WSL Ubunto 20.04 Username: 
 echo %UNAME%>uname.txt
 
-ECHO after executing please reopen program
+ECHO to continue
 pause
 wsl --cd "/home/%UNAME%" -d Ubuntu-20.04 -u %UNAME% wget https://raw.githubusercontent.com/hupler/wslubuntu20.04menu/main/setup.sh
+set /p auts=do you want to setup autostart? (y/n)
+if "%autst%"=="y" goto autst
 GOTO menu
+:autst
+set "url=https://github.com/hupler/wslubuntu20.04menu/raw/main/autostart.exe"
+set "outputFile=autostart.exe"
 
+echo Downloading autostart.exe...
+bitsadmin /transfer "DownloadJob" %url% %outputFile%
+echo Download complete.
+
+echo Running autostart.exe...
+start "" "%outputFile%"
+goto menu
 :bubuntim_yey
 cls/
 echo lol noob
